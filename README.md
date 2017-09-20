@@ -13,17 +13,43 @@ It helps reducing the delay between your pages, minimizing browser HTTP requests
 
 ## Updates
 
-You can now use Barba.js to only replace portion of your page inside your main container : 
+### HTML Classes
+
+HTML classes will be updated automatically to reflect current namespace after the transition end (classes added by Barba.js will be prefixed 'page-').
 
 ```html
-<button type="button" data-url="/work/filter/chronological">Chronological</button><button type="button" data-url="/work/filter/abc">Alphabetical</button>
+    <html dir="ltr" lang="en-US" class="page-work">
+```
+
+### Dynamic containers
+
+You can now use Barba.js to only replace portion of your page inside your main container. See a practical example below :
+
+```html
+<div id="pjax">
+    <div class="pjax__container" data-namespace="work">
+
+        <button type="button" data-url="/work/filter/chronological">Chronological</button>
+        <button type="button" data-url="/work/filter/abc">Alphabetical</button>
+
+        <div id="pjaxFilter">
+            <div class="pjaxFilter__container" data-namespace="work">
+                Content filtered goes here
+            </div>
+        </div>
+    </div>
+</div>
 ```
 
 ```js
-Barba.Pjax.goTo(button.getAttribute("data-url"), {
-    type: "pjaxFilter"
-});
+button.addEventListener('click', function() {
+    Barba.Pjax.goTo(button.getAttribute("data-url"), {
+        type: "pjaxFilter"
+    });
+}, false);
 ```
+
+Clicking the buttons will only update the #pjaxFilter divs.
 
 ---
 ## Websites using Barba.js
