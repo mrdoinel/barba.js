@@ -11,7 +11,12 @@
 
 It helps reducing the delay between your pages, minimizing browser HTTP requests and enhancing your user's web experience.
 
-## Updates
+## Fork : Updates 
+
+This is a fork from <a href="https://gitter.im/luruke/barba.js">luruke's Barba.js</a>. I added 2 features :
+
+- Set HTML Classes when transition end
+- Ability to set up dynamic container (to replace only portions of your page)
 
 ### HTML Classes
 
@@ -23,7 +28,7 @@ HTML classes will be updated automatically to reflect current namespace after th
 
 ### Dynamic containers
 
-You can now use Barba.js to only replace portion of your page inside your main container. See a practical example below :
+You can now use Barba.js to only replace portions of your page inside your main container. See a practical example below :
 
 ```html
 <div id="pjax">
