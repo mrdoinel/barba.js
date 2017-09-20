@@ -21,6 +21,7 @@ var Dom = {
    * @type {String}
    * @default
    */
+  wrapperDefaultId: 'barba-wrapper',
   wrapperId: 'barba-wrapper',
 
   /**
@@ -30,6 +31,7 @@ var Dom = {
    * @type {String}
    * @default
    */
+  containerDefaultClass: 'barba-wrapper',
   containerClass: 'barba-container',
 
   /**
@@ -116,9 +118,13 @@ var Dom = {
    * @return {String}
    */
   getNamespace: function(element) {
+    if (!element) element = document.querySelector('.' + this.containerDefaultClass);
+
     if (element && element.dataset) {
+      console.warn("BarbaJS : getNamespace " + element.dataset[this.dataNamespace]); // eslint-disable-line no-console
       return element.dataset[this.dataNamespace];
     } else if (element) {
+      console.warn("BarbaJS : getNamespace " + element.getAttribute('data-' + this.dataNamespace)); // eslint-disable-line no-console
       return element.getAttribute('data-' + this.dataNamespace);
     }
 
@@ -149,6 +155,33 @@ var Dom = {
    */
   parseContainer: function(element) {
     return element.querySelector('.' + this.containerClass);
+  },
+
+  /**
+   * Set HTML element class
+   *
+   * @memberOf Barba.Pjax.Dom
+   * @private
+   * @param  {HTMLElement} element
+   * @return {HTMLElement} element
+   */
+  setHTMLClass: function(namespace) {
+    var prefixPages = "page-";
+    //var prefixUI = "ui-";
+
+    // Remove pages and UI classes from the html
+    var klasses = document.documentElement.className.split(" ").filter(function(klass) {
+        var isPage = klass.lastIndexOf(prefixPages, 0) === 0 ? true : false;
+        //var isUI = klass.lastIndexOf(prefixUI, 0) === 0 ? true : false;
+
+        return !isPage; //&& !isUI;
+    });
+
+    var namespaces = namespace.split(" ").map(function(n) {
+        klasses.push(prefixPages + n);
+    });
+
+    document.documentElement.className = klasses.join(" ").trim();
   }
 };
 

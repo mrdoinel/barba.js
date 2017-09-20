@@ -96,7 +96,7 @@ var Pjax = {
     );
 
     window.addEventListener('popstate',
-      this.onStateChange.bind(this)
+        this.onStateChange.bind(this)
     );
   },
 
@@ -118,8 +118,14 @@ var Pjax = {
    * @memberOf Barba.Pjax
    * @param {String} newUrl
    */
-  goTo: function(url) {
-    window.history.pushState(null, null, url);
+  goTo: function(url, state) {
+
+    // set the type of request to be made
+    var state = state || this.setDefaultState();
+
+    console.warn("BarbaJS : goTo " + url + " - state : " + state); // eslint-disable-line no-console
+
+    window.history.pushState(state, null, url);
     this.onStateChange();
   },
 
@@ -292,13 +298,39 @@ var Pjax = {
   },
 
   /**
+   * Set default history state if not defined
+   *
+   * @memberOf Barba.Pjax
+   * @private
+   */
+  setDefaultState: function() {
+    return { type: this.Dom.wrapperDefaultId }
+  },
+
+  /**
    * Method called after a 'popstate' or from .goTo()
    *
    * @memberOf Barba.Pjax
    * @private
    */
   onStateChange: function() {
+
+    var request_type = this.Dom.wrapperDefaultId;
+
+    if(window.history.state) {
+      request_type = window.history.state.type ? window.history.state.type : this.Dom.wrapperDefaultId;
+
+      // go back to default state
+      window.history.replaceState(this.setDefaultState(), document.title);
+    }
+
+    // update Dom.WrapperID & Dom.containerClass (which define the zone that must must updated after the ajax)
+    this.Dom.wrapperId = document.getElementById(request_type) ? request_type : this.Dom.wrapperDefaultId;
+    this.Dom.containerClass = this.Dom.wrapperId + "__container";
+
     var newUrl = this.getCurrentUrl();
+
+    console.warn("BarbaJS : onStateChange " + newUrl); // eslint-disable-line no-console
 
     if (this.transitionProgress)
       this.forceGoTo(newUrl);
@@ -359,6 +391,9 @@ var Pjax = {
    */
   onTransitionEnd: function() {
     this.transitionProgress = false;
+
+    var currentStatus = this.History.currentStatus();
+    if(currentStatus.namespace) this.Dom.setHTMLClass(currentStatus.namespace);
 
     Dispatcher.trigger('transitionCompleted',
       this.History.currentStatus(),
