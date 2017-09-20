@@ -42,6 +42,14 @@ You can now use Barba.js to only replace portion of your page inside your main c
 ```
 
 ```js
+// DOM settings
+Barba.Pjax.Dom.wrapperId = "pjax";
+Barba.Pjax.Dom.wrapperDefaultId = Barba.Pjax.Dom.wrapperId;
+Barba.Pjax.Dom.containerClass = "pjax__container";
+Barba.Pjax.Dom.containerDefaultClass = Barba.Pjax.Dom.containerClass;
+```
+
+```js
 button.addEventListener('click', function() {
     Barba.Pjax.goTo(button.getAttribute("data-url"), {
         type: "pjaxFilter"
@@ -50,6 +58,7 @@ button.addEventListener('click', function() {
 ```
 
 Clicking the buttons will only update the #pjaxFilter divs.
+Please note that if #pjaxFilter is not found it will fallback on wrapperDefaultId (#pjax).
 
 ---
 ## Websites using Barba.js
