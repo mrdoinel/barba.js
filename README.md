@@ -11,6 +11,20 @@
 
 It helps reducing the delay between your pages, minimizing browser HTTP requests and enhancing your user's web experience.
 
+## Updates
+
+You can now use Barba.js to only replace portion of your page inside your main container : 
+
+```html
+<button type="button" data-url="/work/filter/chronological">Chronological</button><button type="button" data-url="/work/filter/abc">Alphabetical</button>
+```
+
+```js
+Barba.Pjax.goTo(button.getAttribute("data-url"), {
+    type: "pjaxFilter"
+});
+```
+
 ---
 ## Websites using Barba.js
 <a href="https://www.stanleystella.com" target="_blank"><img src="http://barbajs.org/images/1.gif" width="288"></a>
