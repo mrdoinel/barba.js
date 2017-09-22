@@ -62,8 +62,10 @@ button.addEventListener('click', function() {
 }, false);
 ```
 
-Clicking the buttons will only update the #pjaxFilter divs.
+Clicking the buttons will only update the #pjaxFilter container : `pjaxFilter__container`.
 Please note that if #pjaxFilter is not found it will fallback on wrapperDefaultId (#pjax).
+
+Because Barba.js need a wrapper and a container (so you can do a transition), when setting the type parameter, the script assume that the container is set up this way : `${wrapperId}__container`.
 
 ---
 ## Websites using Barba.js
