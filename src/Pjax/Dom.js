@@ -175,16 +175,18 @@ var Dom = {
    * @return {HTMLElement} element
    */
   setHTMLClass: function(namespace) {
+    var prefix = this.HTMLClassPrefix;
+
     // Remove previous pages classes from the html
     var klasses = document.documentElement.className.split(" ").filter(function(klass) {
-        var isPage = klass.lastIndexOf(this.HTMLClassPrefix, 0) === 0 ? true : false;
+        var isPage = klass.lastIndexOf(prefix, 0) === 0 ? true : false;
 
         return !isPage;
     });
 
     // The namespace can contain multiple slugs
     var namespaces = namespace.split(" ").map(function(n) {
-        klasses.push(this.HTMLClassPrefix + n);
+        klasses.push(prefix + n);
     });
 
     document.documentElement.className = klasses.join(" ").trim();
