@@ -1636,7 +1636,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    // update Dom.WrapperID
 	    // (which define the zone that must must be updated after the request complete)
-	    this.Dom.wrapperId = document.querySelector('[' + this.wrapperAttr + '="' + request_type + '"]') ? request_type : this.Dom.wrapperDefaultId;
+	    this.Dom.wrapperId = document.querySelector('[' + this.Dom.wrapperAttr + '="' + request_type + '"]') ? request_type : this.Dom.wrapperDefaultId;
 	
 	    var newUrl = this.getCurrentUrl();
 	
