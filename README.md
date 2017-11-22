@@ -13,14 +13,14 @@ It helps reducing the delay between your pages, minimizing browser HTTP requests
 
 ## Fork : Updates 
 
-This is a fork from <a href="https://gitter.im/luruke/barba.js">luruke's Barba.js</a>. I added 2 features :
+This is a fork from <a href="https://gitter.im/luruke/barba.js">luruke's Barba.js</a>. I added 2 missing features :
 
-- Set HTML Classes when transition end
+- Set HTML Classes automatically when the transition end
 - Ability to set up dynamic container (to replace only portions of your page)
 
 ### HTML Classes
 
-HTML classes will be updated automatically to reflect current namespace after the transition end (classes added by Barba.js will be prefixed 'page-').
+HTML classes will be updated automatically to reflect current namespace after the transition end. By default, the classes added by Barba.js are prefixed with 'page-'. This way you can easily set styles on navigation elements that are not removed/added after a transition ended.
 
 ```html
     <html dir="ltr" lang="en-US" class="page-work">
@@ -31,14 +31,14 @@ HTML classes will be updated automatically to reflect current namespace after th
 You can now use Barba.js to only replace portions of your page inside your main container. See a practical example below :
 
 ```html
-<div id="pjax">
-    <div class="pjax__container" data-namespace="work">
+<div data-pjax-wrapper="pjax">
+    <div data-pjax-container="pjax" data-namespace="work">
 
         <button type="button" data-url="/work/filter/chronological">Chronological</button>
         <button type="button" data-url="/work/filter/abc">Alphabetical</button>
 
-        <div id="pjaxFilter">
-            <div class="pjaxFilter__container" data-namespace="work">
+        <div data-pjax-wrapper="pjaxFilter">
+            <div data-pjax-container="pjaxFilter" data-namespace="work">
                 Content filtered goes here
             </div>
         </div>
@@ -50,8 +50,8 @@ You can now use Barba.js to only replace portions of your page inside your main 
 // DOM settings
 Barba.Pjax.Dom.wrapperId = "pjax";
 Barba.Pjax.Dom.wrapperDefaultId = Barba.Pjax.Dom.wrapperId;
-Barba.Pjax.Dom.containerClass = "pjax__container";
-Barba.Pjax.Dom.containerDefaultClass = Barba.Pjax.Dom.containerClass;
+Barba.Pjax.Dom.wrapperAttr = "data-pjax-wrapper";
+Barba.Pjax.Dom.containerAttr = "data-pjax-container";
 ```
 
 ```js
@@ -65,7 +65,7 @@ button.addEventListener('click', function() {
 Clicking the buttons will only update the #pjaxFilter container : `pjaxFilter__container`.
 Please note that if #pjaxFilter is not found it will fallback on wrapperDefaultId (#pjax).
 
-Because Barba.js need a wrapper and a container (so you can do a transition), when setting the type parameter, the script assume that the container is set up this way : `${wrapperId}__container`.
+Because Barba.js need a wrapper and a container (so you can do a transition), when setting the type parameter, the script assume that the container is set up this way : `${containerAttr}='${wrapperId}'`.
 
 ---
 ## Websites using Barba.js

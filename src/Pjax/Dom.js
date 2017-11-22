@@ -15,24 +15,33 @@ var Dom = {
   dataNamespace: 'namespace',
 
   /**
+   * Prefix of the HTML classes added
+   *
+   * @memberOf Barba.Pjax.Dom
+   * @type {String}
+   * @default
+   */
+  HTMLClassPrefix: 'page-',
+
+  /**
    * Id of the main wrapper
    *
    * @memberOf Barba.Pjax.Dom
    * @type {String}
    * @default
    */
-  wrapperDefaultId: 'barba-wrapper',
   wrapperId: 'barba-wrapper',
+  wrapperDefaultId: 'barba-wrapper',
+  wrapperAttr: 'data-barba-wrapper',
 
   /**
-   * Class name used to identify the containers
+   * Data attributes used to identify the containers
    *
    * @memberOf Barba.Pjax.Dom
    * @type {String}
    * @default
    */
-  containerDefaultClass: 'barba-wrapper',
-  containerClass: 'barba-container',
+  containerAttr: 'data-barba-container',
 
   /**
    * Full HTML String of the current page.
@@ -74,7 +83,7 @@ var Dom = {
    * @return {HTMLElement} element
    */
   getWrapper: function() {
-    var wrapper = document.getElementById(this.wrapperId);
+    var wrapper = document.querySelector('[' + this.wrapperAttr + '="' + this.wrapperId + '"]');
 
     if (!wrapper)
       throw new Error('Barba.js: wrapper not found!');
@@ -118,7 +127,7 @@ var Dom = {
    * @return {String}
    */
   getNamespace: function(element) {
-    if (!element) element = document.querySelector('.' + this.containerDefaultClass);
+    if (!element) element = document.querySelector('[' + this.containerAttr + '="' + this.wrapperId + '"]');
 
     if (element && element.dataset) {
       console.warn("BarbaJS : getNamespace " + element.dataset[this.dataNamespace]); // eslint-disable-line no-console
@@ -154,7 +163,7 @@ var Dom = {
    * @return {HTMLElement} element
    */
   parseContainer: function(element) {
-    return element.querySelector('.' + this.containerClass);
+    return element.querySelector('[' + this.containerAttr + '="' + this.wrapperId + '"]');
   },
 
   /**
@@ -166,19 +175,16 @@ var Dom = {
    * @return {HTMLElement} element
    */
   setHTMLClass: function(namespace) {
-    var prefixPages = "page-";
-    //var prefixUI = "ui-";
-
-    // Remove pages and UI classes from the html
+    // Remove previous pages classes from the html
     var klasses = document.documentElement.className.split(" ").filter(function(klass) {
-        var isPage = klass.lastIndexOf(prefixPages, 0) === 0 ? true : false;
-        //var isUI = klass.lastIndexOf(prefixUI, 0) === 0 ? true : false;
+        var isPage = klass.lastIndexOf(this.HTMLClassPrefix, 0) === 0 ? true : false;
 
-        return !isPage; //&& !isUI;
+        return !isPage;
     });
 
+    // The namespace can contain multiple slugs
     var namespaces = namespace.split(" ").map(function(n) {
-        klasses.push(prefixPages + n);
+        klasses.push(this.HTMLClassPrefix + n);
     });
 
     document.documentElement.className = klasses.join(" ").trim();

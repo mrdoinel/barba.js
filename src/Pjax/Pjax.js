@@ -324,9 +324,9 @@ var Pjax = {
       window.history.replaceState(this.setDefaultState(), document.title);
     }
 
-    // update Dom.WrapperID & Dom.containerClass (which define the zone that must must updated after the ajax)
-    this.Dom.wrapperId = document.getElementById(request_type) ? request_type : this.Dom.wrapperDefaultId;
-    this.Dom.containerClass = this.Dom.wrapperId + "__container";
+    // update Dom.WrapperID
+    // (which define the zone that must must be updated after the request complete)
+    this.Dom.wrapperId = document.querySelector('[' + this.wrapperAttr + '="' + request_type + '"]') ? request_type : this.Dom.wrapperDefaultId;
 
     var newUrl = this.getCurrentUrl();
 
