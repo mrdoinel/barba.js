@@ -17,6 +17,7 @@ This is a fork from <a href="https://gitter.im/luruke/barba.js">luruke's Barba.j
 
 - Set HTML Classes automatically when the transition end
 - Ability to set up dynamic container (to replace only portions of your page)
+- Ability to define a custom class to prefetch specfics links
 
 ### HTML Classes
 
@@ -66,6 +67,15 @@ Clicking the buttons will only update the #pjaxFilter container : `pjaxFilter__c
 Please note that if #pjaxFilter is not found it will fallback on wrapperDefaultId (#pjax).
 
 Because Barba.js need a wrapper and a container (so you can do a transition), when setting the type parameter, the script assume that the container is set up this way : `${containerAttr}='${wrapperId}'`.
+
+### Prefetch class
+
+You can now define a class to prefetch only specific links. By default, Barba.js prefetch all links without `ignoreClassLink`.
+
+```js
+  Barba.Prefetch.prefetchClass = 'pjax-prefetch';
+  Barba.Prefetch.init();
+```
 
 ---
 ## Websites using Barba.js
