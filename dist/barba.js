@@ -2013,6 +2013,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	    var url = Pjax.getHref(el);
+	    console.warn("BarbaJS : prefetch " + url); // eslint-disable-line no-console
+	
 	
 	    //Check if the link is elegible for Pjax
 	    if (Pjax.preventCheck(evt, el) && !Pjax.Cache.get(url)) {
