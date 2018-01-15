@@ -30,7 +30,10 @@
     "url": "https://github.com/luruke/barba.js/issues"
   },
   "author": "Luigi De Rosa <lurukee@gmail.com>",
-  "contributors": [ "Doury Antoine <antoine@area17.com>" ],
+  "contributors": [
+    "Doury Antoine <antoine@area17.com>",
+    "Caudron Antonin <antonin@area17.com>"
+  ],
   "license": "MIT",
   "devDependencies": {
     "http-server": "^0.9.0",
